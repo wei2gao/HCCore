@@ -125,15 +125,15 @@ public class LocCommand implements TabExecutor {
                 Location sendLocation = data.getSavedLocations().get(locationName);
                 // TODO: Add share functionality
                 // Get the player we're sending to
-                Player recipient = org.bukkit.Bukkit.getPlayer(recipientName);
+                Player recipient = sender.getServer().getPlayer(recipientName);
                 if (recipient == null) {
                     sender.sendMessage(ChatColor.RED
-                            + "Player '" + recipientName + "' does not exist.");
+                            + "No online player with that name was found");
                     break;
                 }
                 if (recipientName.equals(player.getName())) {
                     sender.sendMessage(ChatColor.RED
-                            + "You can't share a location with yourself!");
+                            + "You can’t share a location with yourself!");
                     break;
                 }
                 PlayerData recipData  = this.plugin.getDataManager().getData(recipient);
@@ -154,7 +154,7 @@ public class LocCommand implements TabExecutor {
 
                 player.sendMessage(ChatColor.GREEN + String.format("Shared %s with %s", locationName, recipientName));
                 recipient.sendMessage(ChatColor.GREEN + String.format("%s has shared a location: %s (%s)", player.getName(), locationName, locationString));
-                recipData.getSavedLocations().put(player.getName() + ":" + locationName,sendLocation);              
+                recipData.getSavedLocations().put(player.getName() + ":" + locationName,sendLocation);
                 break;
             }
             default:
